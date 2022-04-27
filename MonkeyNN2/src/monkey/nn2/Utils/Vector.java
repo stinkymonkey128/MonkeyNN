@@ -1,25 +1,33 @@
 package monkey.nn2.Utils;
 
-public class Vector<T> {
+public class Vector<T> implements Shape {
+	
 	private T[] vector;
 	
-	public Vector(T[] value) {
-		vector = value;
+	public Vector(T[] vector) {
+		this.vector = vector;
 	}
 	
-	public Vector(int size) {
-		vector = (T[])new Object[size];
+	public Vector(int[] size) {
+		vector = (T[]) new Object[size[0]];
 	}
-	
-	public T get(int pos) {
-		return vector[pos];
+
+	@Override
+	public int[] getSize() {
+		return new int[] {vector.length};
 	}
-	
-	public void set(int pos, T value) {
-		vector[pos] = value;
+
+	@Override
+	public T get(int[] pos) {
+		return vector[pos[0]];
 	}
-	
-	public T[] toType() {
+
+	@Override
+	public void set(int[] pos, Object value) {
+		vector[pos[0]] = (T)value;
+	}
+
+	public T[] dump() {
 		return vector;
 	}
 }

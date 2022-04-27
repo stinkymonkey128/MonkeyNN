@@ -1,5 +1,7 @@
 package monkey.nn2.Activators;
 
+import monkey.nn2.Utils.*;
+
 public abstract class Activator {
 	public abstract Float calc(Float x);
 	
@@ -10,7 +12,10 @@ public abstract class Activator {
 	 */
 	public abstract Float prime(Float x);
 	
-	public Float[][] calc(Float[][] x) {
+	public Matrix<Float> calc(Matrix<Float> x) {
+		int xRow = x.getSize()[0];
+		int xCol = x.getSize()[1];
+		
 		Float[][] out = new Float[x.length][x[0].length];
 		
 		for (int i = 0; i < x.length; i++)

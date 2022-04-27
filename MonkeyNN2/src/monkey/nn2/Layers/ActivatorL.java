@@ -2,20 +2,21 @@ package monkey.nn2.Layers;
 
 import monkey.nn2.Activators.Activator;
 import monkey.nn2.Initializer.Constant;
+import monkey.nn2.Utils.*;
 
 public class ActivatorL implements Layer {
 	
-	Float[] neurons;
+	Vector<Float> neurons;
 	
 	Activator activator;
 	
 	public ActivatorL(int neurons, Activator activator) {
-		this.neurons = (new Constant(0f)).generate(new int[] {1, neurons})[0];
+		this.neurons = new Vector<Float>((new Constant(0f)).generate(new int[] {1, neurons})[0]);
 		this.activator = activator;
 	}
 	
 	@Override
-	public Float[] feed(Float[] input) {
+	public Vector<Float> feed(Float[] input) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -32,7 +33,7 @@ public class ActivatorL implements Layer {
 	}
 
 	@Override
-	public Float[] getNeurons() {
+	public Vector<Float> getNeurons() {
 		return neurons;
 	}
 
@@ -47,7 +48,7 @@ public class ActivatorL implements Layer {
 	}
 
 	@Override
-	public Float[][] getWeights() {
+	public Matrix<Float> getWeights() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -58,13 +59,13 @@ public class ActivatorL implements Layer {
 	}
 
 	@Override
-	public Float[] getLoss() {
+	public Vector<Float> getLoss() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Float[] getBias() {
+	public Vector<Float> getBias() {
 		// TODO Auto-generated method stub
 		return null;
 	}
