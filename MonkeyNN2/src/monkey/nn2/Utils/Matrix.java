@@ -1,6 +1,6 @@
 package monkey.nn2.Utils;
 
-public class Matrix<T> implements Shape {
+public class Matrix<T> implements Shape<T> {
 	
 	private T[][] matrix;
 	
@@ -27,9 +27,11 @@ public class Matrix<T> implements Shape {
 		matrix[pos[0]][pos[1]] = (T) value;
 	}
 	
-	
 	public T[][] dump() {
 		return matrix;
 	}
-
+	
+	public Vector<T> degrade(int pos) {
+		return new Vector<T>(matrix[pos]);
+	}
 }

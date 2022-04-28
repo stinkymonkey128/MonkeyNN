@@ -15,11 +15,7 @@ public class Conv2D implements Layer {
 		
 	}
 
-	@Override
-	public Vector<Float> feed(Float[] input) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	@Override
 	public boolean hasWeights() {
@@ -68,6 +64,14 @@ public class Conv2D implements Layer {
 
 	@Override
 	public Vector<Float> getBias() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public Shape<Float> feed(Shape<Float> input) {
 		// TODO Auto-generated method stub
 		return null;
 	}
