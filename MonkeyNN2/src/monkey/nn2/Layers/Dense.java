@@ -53,7 +53,11 @@ public class Dense implements Layer {
 
 	@Override
 	public Shape<Float> feed(Shape<Float> input) {
-		neurons = activator.calc(Basic.converge(Basic.dot(new Matrix<Float>(new Float[][] {((Vector<Float>)input).dump()}), weights).degrade(0), bias));
+		
+		Matrix<Float> inputMatrix = new Matrix<Float>(new Float[][] {((Vector<Float>)input).dump()});
+		Matrix<Float> dotProduct = Basic.dot(inputMatrix, weights);
+		
+		neurons = activator.calc(Basic.converge(dotProduct.degrade(0), bias));
 		return neurons;
 	}
 	

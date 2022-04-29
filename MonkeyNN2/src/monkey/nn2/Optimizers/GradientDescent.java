@@ -4,6 +4,7 @@ import monkey.nn2.Exceptions.IllegalLength;
 import monkey.nn2.Layers.Layer;
 import monkey.nn2.LossFunction.*;
 import monkey.nn2.Structure.Structure;
+import monkey.nn2.Utils.*;
 
 public class GradientDescent implements Optimizer {
 	/*
@@ -25,25 +26,56 @@ public class GradientDescent implements Optimizer {
 		this.lossFunction = lossFunction;
 	}
 	
+	/*
+	 * Gradient Back prop hidden layers
+	 */
 	public void fitHid(Layer prev, Layer curr, Layer next) {
-		for (int i = 0; i < curr.getNeurons().length; i++) {
-			for (int j = 0; j < next.getLoss().length; j++)
-				curr.getLoss()[i] += next.getLoss()[j] * next.getWeights()[i][j];
-			curr.getLoss()[i] *= curr.getActivator().prime(curr.getNeurons()[i]);
+		for (int i = 0; i < curr.getNeurons().getSize()[0]; i++) {
+			Float cLoss = curr.getLoss().get(new int[] {i});
+			
+			for (int j = 0; j < next.getLoss().getSize()[0]; j++) {
+				Float nLoss = next.getLoss().get(new int[] {j});
+				Float nWeight = next.getWeights().get(new int[] {i, j});
+				
+				cLoss += nLoss * nWeight;
+			}
+			cLoss *= curr.getActivator().prime(curr.getNeurons().get(new int[] {i}));
 	    	 
-	    	  for (int j = 0; j < prev.getNeurons().length; j++)
-	    		  curr.getWeights()[j][i] -= learningRate * curr.getLoss()[i] * prev.getNeurons()[j];
-	    	curr.getBias()[i] -= curr.getLoss()[i] * curr.getBias()[i] * learningRate;
+	    	for (int j = 0; j < prev.getNeurons().getSize()[0]; j++) {
+	    		Float cWeight = curr.getWeights().get(new int[] {j, i});
+	    		Float pNeuron = prev.getNeurons().get(new int[] {j});
+	    		  
+	    		cWeight -= learningRate * cLoss * pNeuron;
+	    	}
+	    	
+	    	Float cBias = curr.getBias().get(new int[] {i});
+	    	
+	    	cBias -= cLoss * cBias * learningRate;
 	    }
 	}
 	
-	public void fitOut(Layer prev, Layer curr, Float[] goal) {
-		for (int i = 0; i < curr.getNeurons().length; i++) {
-			curr.getLoss()[i] = lossFunction.prime(curr.getNeurons()[i], goal[i]) * curr.getActivator().prime(curr.getNeurons()[i]);
-	    		for (int j = 0; j < prev.getNeurons().length; j++) {
-	    			curr.getWeights()[j][i] -= learningRate * curr.getLoss()[i] * prev.getNeurons()[j];
-	    		}
-	    	curr.getBias()[i] -= learningRate * curr.getBias()[i] * curr.getLoss()[i];
+	/*
+	 * Gradient Back prop Output layer
+	 */
+	public void fitOut(Layer prev, Layer curr, Shape<Float> goal) {
+		for (int i = 0; i < curr.getNeurons().getSize()[0]; i++) {
+			Float cLoss = curr.getLoss().get(new int[] {i});
+			Float cNeuron = curr.getNeurons().get(new int[] {i});
+			
+			cLoss = lossFunction.prime(cNeuron, goal.get(new int[] {i})) * curr.getActivator().prime(cNeuron);
+	    	
+			for (int j = 0; j < prev.getNeurons().getSize()[0]; j++) {
+	    		Float cWeight = curr.getWeights().get(new int[] {j, i});
+	    		Float pNeuron = prev.getNeurons().get(new int[] {j});
+	    			
+	    		cWeight -= learningRate * cLoss * pNeuron;
+	    	}
+			
+			// Bias Update
+			
+			Float cBias = curr.getBias().get(new int[] {i});
+	    		
+			cBias -= learningRate * cBias * cLoss;
 		}
 	}
 	

@@ -2,7 +2,7 @@ package Test;
 
 import monkey.nn2.Activators.*;
 import monkey.nn2.Structure.*;
-import monkey.nn2.Utils.Basic;
+import monkey.nn2.Utils.*;
 import monkey.nn2.Layers.*;
 import monkey.nn2.LossFunction.*;
 import monkey.nn2.Optimizers.*;
@@ -44,10 +44,10 @@ public class Test {
 		
 		System.out.println(model.summary());
 		
-		model.feed(samp[0]);
-		model.backProp(goal[0]);
+		model.feed(new Vector<Float>(samp[0]));
+		model.backProp(new Vector<Float>(goal[0]));
 		
-		Basic.printArray(model.feed(samp[0]));
+		Basic.printArray((Vector<Float>)model.feed(new Vector<Float>(samp[0])));
 	}
 	
 	private static void printMatrix(Float[][] x) {

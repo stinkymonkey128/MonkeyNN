@@ -18,7 +18,7 @@ public class Matrix3D<T> implements Shape<T> {
 	}
 
 	@Override
-	public Object get(int[] pos) {
+	public T get(int[] pos) {
 		return matrix[pos[0]][pos[1]][pos[2]];
 	}
 
