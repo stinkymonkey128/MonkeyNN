@@ -1,6 +1,6 @@
 package monkey.nn2.Utils;
 
-public class Vector<T> implements Shape {
+public class Vector<T> implements Shape<T> {
 	
 	private T[] vector;
 	

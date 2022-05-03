@@ -14,12 +14,7 @@ public class ActivatorL implements Layer {
 		this.neurons = new Vector<Float>((new Constant(0f)).generate(new int[] {1, neurons})[0]);
 		this.activator = activator;
 	}
-	
-	@Override
-	public Vector<Float> feed(Float[] input) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 	@Override
 	public boolean hasWeights() {
@@ -66,6 +61,13 @@ public class ActivatorL implements Layer {
 
 	@Override
 	public Vector<Float> getBias() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Shape<Float> feed(Shape<Float> input) {
 		// TODO Auto-generated method stub
 		return null;
 	}

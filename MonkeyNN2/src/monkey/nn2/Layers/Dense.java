@@ -52,13 +52,32 @@ public class Dense implements Layer {
 	}
 
 	@Override
-	public Vector<Float> feed(Vector<Float> input) {
-		neurons = activator.calc(Basic.converge(Basic.dot(new Matrix<Float>(new Float[][] {{input}}), weights)[0], bias));
+	public Shape<Float> feed(Shape<Float> input) {
+		
+		Vector<Float> tV = (Vector<Float>) input;
+		
+		for (int i = 0; i < tV.getSize()[0]; i++)
+			System.out.print(tV.get(new int[] {i}) + " ");
+		System.out.println();
+		
+		
+		Object[] oVector = tV.dump();
+		
+		for (int i = 0; i < oVector.length; i++)
+			System.out.print(oVector[i] + " ");
+		System.out.println("\n");
+		
+	//	Float[] tVector = (Float[]) oVector;
+	//	Matrix<Float> inputMatrix = new Matrix<Float>(new Float[][] {tVector} );
+		Matrix<Float> inputMatrix = new Matrix<Float>(new Float[][] {(Float[])oVector} );
+		Matrix<Float> dotProduct = Basic.dot(inputMatrix, weights);
+		
+		neurons = activator.calc(Basic.converge(dotProduct.degrade(0), bias));
 		return neurons;
 	}
 	
 	public void compile(int[] weightShape) {
-		weights = weightInit.generate(weightShape);
+		weights = new Matrix<Float>(weightInit.generate(weightShape));
 	}
 
 	@Override
@@ -67,13 +86,13 @@ public class Dense implements Layer {
 	}
 
 	@Override
-	public Float[] getNeurons() {
+	public Shape<Float> getNeurons() {
 		return neurons;
 	}
 
 	@Override
 	public int[] weightSize() {
-		return new int[] {weights.length, weights[0].length};
+		return weights.getSize();
 	}
 	
 	@Override
@@ -82,7 +101,7 @@ public class Dense implements Layer {
 	}
 
 	@Override
-	public Float[][] getWeights() {
+	public Shape<Float> getWeights() {
 		return weights;
 	}
 	
@@ -92,12 +111,12 @@ public class Dense implements Layer {
 	}
 
 	@Override
-	public Float[] getLoss() {
+	public Shape<Float> getLoss() {
 		return loss;
 	}
 
 	@Override
-	public Float[] getBias() {
+	public Shape<Float> getBias() {
 		return bias;
 	}
 }

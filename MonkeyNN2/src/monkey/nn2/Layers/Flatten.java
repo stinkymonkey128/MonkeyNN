@@ -1,10 +1,9 @@
 package monkey.nn2.Layers;
 
 import monkey.nn2.Activators.Activator;
+import monkey.nn2.Utils.Shape;
 
 public class Flatten implements Layer {
-	
-	
 
 	@Override
 	public boolean hasWeights() {
@@ -13,7 +12,7 @@ public class Flatten implements Layer {
 	}
 
 	@Override
-	public Float[] feed(Float[] input) {
+	public Shape<Float> feed(Shape<Float> input) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -25,7 +24,7 @@ public class Flatten implements Layer {
 	}
 
 	@Override
-	public Float[] getNeurons() {
+	public Shape<Float> getNeurons() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -49,19 +48,19 @@ public class Flatten implements Layer {
 	}
 
 	@Override
-	public Float[][] getWeights() {
+	public Shape<Float> getWeights() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Float[] getLoss() {
+	public Shape<Float> getLoss() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Float[] getBias() {
+	public Shape<Float> getBias() {
 		// TODO Auto-generated method stub
 		return null;
 	}

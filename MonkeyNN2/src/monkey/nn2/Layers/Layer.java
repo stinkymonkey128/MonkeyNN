@@ -2,6 +2,7 @@ package monkey.nn2.Layers;
 
 import monkey.nn2.Activators.Activator;
 import monkey.nn2.Utils.Shape;
+import monkey.nn2.Utils.Vector;
 
 public interface Layer {
 	public abstract boolean hasWeights();
@@ -17,4 +18,5 @@ public interface Layer {
 	public abstract Shape<Float> getWeights();
 	public abstract Shape<Float> getLoss();
 	public abstract Shape<Float> getBias();
+
 }
