@@ -39,18 +39,25 @@ public class GradientDescent implements Optimizer {
 				
 				cLoss += nLoss * nWeight;
 			}
+			
 			cLoss *= curr.getActivator().prime(curr.getNeurons().get(new int[] {i}));
+			
+			curr.getLoss().set(new int[] {i}, cLoss);
 	    	 
 	    	for (int j = 0; j < prev.getNeurons().getSize()[0]; j++) {
 	    		Float cWeight = curr.getWeights().get(new int[] {j, i});
 	    		Float pNeuron = prev.getNeurons().get(new int[] {j});
-	    		  
+	    		
 	    		cWeight -= learningRate * cLoss * pNeuron;
+	    		
+	    		curr.getWeights().set(new int[] {j, i}, cWeight);
 	    	}
 	    	
 	    	Float cBias = curr.getBias().get(new int[] {i});
 	    	
 	    	cBias -= cLoss * cBias * learningRate;
+	    	
+	    	curr.getBias().set(new int [] {i}, cBias);
 	    }
 	}
 	
@@ -64,11 +71,15 @@ public class GradientDescent implements Optimizer {
 			
 			cLoss = lossFunction.prime(cNeuron, goal.get(new int[] {i})) * curr.getActivator().prime(cNeuron);
 	    	
+			curr.getLoss().set(new int[] {i}, cLoss);
+			
 			for (int j = 0; j < prev.getNeurons().getSize()[0]; j++) {
 	    		Float cWeight = curr.getWeights().get(new int[] {j, i});
 	    		Float pNeuron = prev.getNeurons().get(new int[] {j});
 	    			
 	    		cWeight -= learningRate * cLoss * pNeuron;
+	    		
+	    		curr.getWeights().set(new int[] {j, i}, cWeight);
 	    	}
 			
 			// Bias Update
@@ -76,6 +87,8 @@ public class GradientDescent implements Optimizer {
 			Float cBias = curr.getBias().get(new int[] {i});
 	    		
 			cBias -= learningRate * cBias * cLoss;
+			
+			curr.getBias().set(new int [] {i}, cBias);
 		}
 	}
 	

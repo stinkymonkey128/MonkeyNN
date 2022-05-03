@@ -11,6 +11,14 @@ public class Matrix<T> implements Shape<T> {
 	public Matrix(int[] size) {
 		matrix = (T[][])new Object[size[0]][size[1]];
 	}
+	
+	public Matrix(Vector<T> x) {
+		matrix[0] = x.dump();
+	}
+	
+	public Matrix(Matrix<T> x) {
+		matrix = x.dump();
+	}
 
 	@Override
 	public int[] getSize() {

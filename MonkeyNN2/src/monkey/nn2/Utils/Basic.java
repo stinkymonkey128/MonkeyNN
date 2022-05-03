@@ -107,11 +107,17 @@ public class Basic {
 	//
 	
 	public static void printArray(Vector<Float> x) {
-		Float[] a = x.dump();
 		
-		for (int i = 0; i < a.length; i++) {
-				System.out.print(a[i] + " ");
+		for (int i = 0; i < x.getSize()[0]; i++) {
+				System.out.print(x.get(new int[] {i}) + " ");
 		}
 		System.out.println();
+	}
+	
+	public static Float[] fArrayCastFix(Object[] x) {
+		Float[] fArray = new Float[x.length];
+		for (int i = 0; i < x.length; i++)
+			fArray[i] = (Float) x[i];
+		return fArray;
 	}
 }

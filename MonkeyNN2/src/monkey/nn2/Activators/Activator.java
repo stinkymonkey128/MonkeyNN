@@ -28,9 +28,12 @@ public abstract class Activator {
 	public Vector<Float> calc(Vector<Float> x) {
 		Vector<Float> out = x;
 		
-		for (int i = 0; i < out.getSize()[0]; i++)
-			out.dump()[i] = calc(out.dump()[i]);
-		
+		for (int i = 0; i < out.getSize()[0]; i++) {
+			Float outX = out.get(new int[] {i});
+			
+			outX = calc(outX);
+		}
+			
 		return out;
 	}
 	
