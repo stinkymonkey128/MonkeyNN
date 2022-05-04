@@ -44,8 +44,15 @@ public class Test {
 		
 		System.out.println(model.summary());
 		
-		model.feed(samp[0]);
-		model.backProp(goal[0]);
+		Basic.printArray(model.feed(samp[0]));
+		
+		for (int i = 0; i < 1; i++) {
+			for (int j = 0; j < goal.length; j++) {
+				model.feed(samp[j]);
+				model.backProp(goal[j]);
+			}
+		}
+		
 		
 		Basic.printArray(model.feed(samp[0]));
 	}

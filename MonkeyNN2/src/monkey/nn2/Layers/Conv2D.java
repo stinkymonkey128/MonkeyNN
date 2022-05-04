@@ -1,8 +1,6 @@
 package monkey.nn2.Layers;
 
 import monkey.nn2.Activators.Activator;
-import monkey.nn2.Utils.*;
-
 public class Conv2D implements Layer {
 	float[][][] filters;
 	float[] bias;
@@ -16,7 +14,7 @@ public class Conv2D implements Layer {
 	}
 
 	@Override
-	public Vector<Float> feed(Float[] input) {
+	public Float[] feed(Float[] input) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -33,7 +31,7 @@ public class Conv2D implements Layer {
 	}
 
 	@Override
-	public Vector<Float> getNeurons() {
+	public Float[] getNeurons() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -50,7 +48,7 @@ public class Conv2D implements Layer {
 	}
 
 	@Override
-	public Matrix<Float> getWeights() {
+	public Float[][] getWeights() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -61,13 +59,13 @@ public class Conv2D implements Layer {
 	}
 
 	@Override
-	public Vector<Float> getLoss() {
+	public Float[] getLoss() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Vector<Float> getBias() {
+	public Float[] getBias() {
 		// TODO Auto-generated method stub
 		return null;
 	}

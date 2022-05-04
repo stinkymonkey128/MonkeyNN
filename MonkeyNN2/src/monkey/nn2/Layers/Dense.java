@@ -2,15 +2,15 @@ package monkey.nn2.Layers;
 
 import monkey.nn2.Activators.*;
 import monkey.nn2.Initializer.*;
-import monkey.nn2.Utils.*;
+import monkey.nn2.Utils.Basic;
 
 public class Dense implements Layer {
 	Initializer weightInit;
 	
-	Vector<Float> neurons;
-	Vector<Float> bias;
-	Matrix<Float> weights;
-	Vector<Float> loss;
+	Float[] neurons;
+	Float[] bias;
+	Float[][] weights;
+	Float[] loss;
 	
 	Activator activator;
 	boolean biasUse;
@@ -24,11 +24,11 @@ public class Dense implements Layer {
 	 * @param filling bias with
 	 */
 	public Dense(int neurons, Activator activator, Initializer weightInit, boolean bias, Initializer biasInit) {
-		this.neurons = new Vector<Float>(new int[] {neurons});
-		this.loss = new Vector<Float>((new Constant(0f)).generate(new int[] {1, neurons})[0]);
+		this.neurons = new Float[neurons];
+		this.loss = (new Constant(0f)).generate(new int[] {1, neurons})[0];
 		this.activator = activator;
 		biasUse = bias;
-		this.bias = new Vector<Float>(biasInit.generate(new int[] {1, neurons})[0]);
+		this.bias = biasInit.generate(new int[] {1, neurons})[0];
 		this.weightInit = weightInit;
 	}
 	
@@ -52,8 +52,14 @@ public class Dense implements Layer {
 	}
 
 	@Override
-	public Vector<Float> feed(Vector<Float> input) {
-		neurons = activator.calc(Basic.converge(Basic.dot(new Matrix<Float>(new Float[][] {{input}}), weights)[0], bias));
+	public Float[] feed(Float[] input) {
+		System.out.println(input[0]);
+		Float[][] mat = new Float[][] {input};
+		System.out.println(mat[0][0]);
+		Float[] dotted = Basic.dot(mat, weights)[0];
+		System.out.println(dotted[0]);
+		neurons = activator.calc(Basic.converge(dotted, bias));
+		System.out.println(neurons[0] + "\n");
 		return neurons;
 	}
 	

@@ -5,6 +5,15 @@ import monkey.nn2.Exceptions.IllegalLength;
 public class Basic {
 	
 	/*
+	 * Derivative of da/dc * dw/da * da/db
+	 * 
+	 * @param Calculated data of w * n + b
+	 */
+	public static Float deriv(Float x) {
+		return x * (1 - x);
+	}
+	
+	/*
 	 * Rotate vector
 	 * 
 	 * @param 2d vector to turn into 3d one cell matrix
@@ -39,22 +48,17 @@ public class Basic {
 	 * @param First Matrix
 	 * @param Second Matrix
 	 */
-	public static Matrix<Float> dot(Matrix<Float> a, Matrix<Float> b) {
+	public static Float[][] dot(Float[][] a, Float[][] b) {
+		if (a[0].length != b.length)
+			throw new IllegalLength("Invalid Matrices " + a[0].length + " != " + b.length);
 		
-		int aColumn = a.getSize()[1], aRow = a.getSize()[0];
-		int bRow = b.getSize()[0], bColumn = b.getSize()[1];
+		Float[][] out = new Float[a.length][b[0].length];
 		
-		if (aColumn !=bRow)
-			throw new IllegalLength("Invalid Matrices " + aColumn + " != " + bRow);
-		
-		
-		Matrix<Float> out = new Matrix<Float>(new int[] {aRow, bColumn});
-		
-		for (int i = 0; i < aRow; i++) 
-		    for (int j = 0; j < bColumn; j++) {
-		    	out.set(new int[] {i, j}, 0f);;
-		        for (int k = 0; k < bRow; k++) 
-		            out.dump()[i][j] += a.dump()[i][k] * b.dump()[k][j];
+		for (int i = 0; i < out.length; i++) 
+		    for (int j = 0; j < out[0].length; j++) {
+		    	out[i][j] = 0f;
+		        for (int k = 0; k < b.length; k++) 
+		            out[i][j] += a[i][k] * b[k][j];
 		    }
 
 		return out;
@@ -76,16 +80,12 @@ public class Basic {
 	 * @param Array A
 	 * @param Array B
 	 */
-	public static Vector<Float> converge(Vector<Float> a, Vector<Float> b) {
-		
-		int aLen = a.getSize()[0];
-		int bLen = b.getSize()[0];
-		
-		if (aLen != bLen)
-			throw new IllegalLength("Invalid Vectors " + aLen + " != " + bLen);
-		Vector<Float> out = a;
-		for (int i = 0; i < a.getSize()[0]; i++)
-			out.dump()[i] += b.dump()[i];
+	public static Float[] converge(Float[] a, Float[] b) {
+		if (a.length != b.length)
+			throw new IllegalLength("Invalid Vectors " + a.length + " != " + b.length);
+		Float[] out = a;
+		for (int i = 0; i < a.length; i++)
+			out[i] += b[i];
 		return out;
 	}
 	

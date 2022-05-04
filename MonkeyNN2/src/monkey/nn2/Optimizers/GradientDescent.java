@@ -42,9 +42,12 @@ public class GradientDescent implements Optimizer {
 			curr.getLoss()[i] = lossFunction.prime(curr.getNeurons()[i], goal[i]) * curr.getActivator().prime(curr.getNeurons()[i]);
 	    		for (int j = 0; j < prev.getNeurons().length; j++) {
 	    			curr.getWeights()[j][i] -= learningRate * curr.getLoss()[i] * prev.getNeurons()[j];
+	    			//System.out.print(curr.getWeights()[j][i] + " ");
 	    		}
+	    		//System.out.println();
 	    	curr.getBias()[i] -= learningRate * curr.getBias()[i] * curr.getLoss()[i];
 		}
+		//System.out.println();
 	}
 	
 	@Override
