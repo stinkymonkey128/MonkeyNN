@@ -16,12 +16,24 @@ public abstract class Activator {
 		int xRow = x.getSize()[0];
 		int xCol = x.getSize()[1];
 		
-		Float[][] out = new Float[x.length][x[0].length];
+		Matrix<Float> out = x;
 		
-		for (int i = 0; i < x.length; i++)
-			for (int j = 0; j < x[0].length; j++)
-				out[i][j] = calc(x[i][j]);
+		for (int i = 0; i < xRow; i++)
+			for (int j = 0; j < xCol; j++)
+				out.dump()[i][j] = calc(out.dump()[i][j]);
 		
+		return out;
+	}
+	
+	public Vector<Float> calc(Vector<Float> x) {
+		Vector<Float> out = x;
+		
+		for (int i = 0; i < out.getSize()[0]; i++) {
+			Float outX = out.get(new int[] {i});
+			
+			out.set(new int[] {i}, calc(outX));
+		}
+			
 		return out;
 	}
 	

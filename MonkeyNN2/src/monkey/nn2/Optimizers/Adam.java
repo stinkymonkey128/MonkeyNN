@@ -1,6 +1,7 @@
 package monkey.nn2.Optimizers;
 
 import monkey.nn2.Layers.Layer;
+import monkey.nn2.Utils.Shape;
 
 public class Adam implements Optimizer {
 	// alpha = tuning req | generally best to start with .003 without adaptive lr
@@ -78,8 +79,10 @@ public class Adam implements Optimizer {
 	}
 
 	@Override
-	public void fitOut(Layer prev, Layer curr, Float[] goal) {
+	public void fitOut(Layer prev, Layer curr, Shape<Float> goal) {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 }

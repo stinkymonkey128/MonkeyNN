@@ -2,19 +2,16 @@ package monkey.nn2.Layers;
 
 import monkey.nn2.Activators.Activator;
 import monkey.nn2.Initializer.Constant;
+import monkey.nn2.Utils.*;
 
 public class Input implements Layer {
 	
-	Float[] neurons;
+	Shape<Float> neurons;
 	
 	public Input(int neurons) {
-		this.neurons = (new Constant(0f)).generate(new int[] {1, neurons})[0];
+		this.neurons = new Vector<Float>((new Constant(0f)).generate(new int[] {1, neurons})[0]);
 	}
 
-	@Override
-	public Float[] feed(Float[] input) {
-		return input;
-	}
 
 	@Override
 	public boolean hasWeights() {
@@ -26,11 +23,7 @@ public class Input implements Layer {
 		// NO WEIGHTS
 	}
 
-	@Override
-	public Float[] getNeurons() {
-		// TODO Auto-generated method stub
-		return neurons;
-	}
+
 
 	@Override
 	public int[] weightSize() {
@@ -41,27 +34,41 @@ public class Input implements Layer {
 	public String getName() {
 		return "Input";
 	}
-
-	@Override
-	public Float[][] getWeights() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	@Override
 	public Activator getActivator() {
 		return null;
 	}
 
+
 	@Override
-	public Float[] getLoss() {
+	public Shape<Float> feed(Shape<Float> input) {
+		return input;
+	}
+
+
+	@Override
+	public Shape<Float> getNeurons() {
+		return neurons;
+	}
+
+
+	@Override
+	public Shape<Float> getWeights() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+
 	@Override
-	public Float[] getBias() {
-		// TODO Auto-generated method stub
+	public Shape<Float> getLoss() {
 		return null;
 	}
+
+
+	@Override
+	public Shape<Float> getBias() {
+		return null;
+	}
+
 }

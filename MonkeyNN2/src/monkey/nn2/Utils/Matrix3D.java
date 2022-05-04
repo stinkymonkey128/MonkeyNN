@@ -1,6 +1,6 @@
 package monkey.nn2.Utils;
 
-public class Matrix3D<T> implements Shape {
+public class Matrix3D<T> implements Shape<T> {
 	
 	T[][][] matrix;
 	
@@ -18,7 +18,7 @@ public class Matrix3D<T> implements Shape {
 	}
 
 	@Override
-	public Object get(int[] pos) {
+	public T get(int[] pos) {
 		return matrix[pos[0]][pos[1]][pos[2]];
 	}
 
@@ -29,5 +29,9 @@ public class Matrix3D<T> implements Shape {
 	
 	public T[][][] dump() {
 		return matrix;
+	}
+	
+	public Matrix<T> degrade(int pos) {
+		return new Matrix<T>(matrix[pos]);
 	}
 }

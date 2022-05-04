@@ -52,9 +52,17 @@ public class Basic {
 		
 		for (int i = 0; i < aRow; i++) 
 		    for (int j = 0; j < bColumn; j++) {
-		    	out.set(new int[] {i, j}, 0f);;
-		        for (int k = 0; k < bRow; k++) 
-		            out.dump()[i][j] += a.dump()[i][k] * b.dump()[k][j];
+		    	Float oV = out.get(new int[] {i, j});
+		    	
+		    	oV = 0f;
+		        for (int k = 0; k < bRow; k++) {
+		        	Float aV = a.get(new int[] {i, k});
+		        	Float bV = b.get(new int[] {k, j});
+		        	
+		            oV += aV * bV;
+		        }
+		        
+		        out.set(new int[] {i, j}, oV);
 		    }
 
 		return out;
@@ -77,15 +85,21 @@ public class Basic {
 	 * @param Array B
 	 */
 	public static Vector<Float> converge(Vector<Float> a, Vector<Float> b) {
-		
 		int aLen = a.getSize()[0];
 		int bLen = b.getSize()[0];
 		
 		if (aLen != bLen)
 			throw new IllegalLength("Invalid Vectors " + aLen + " != " + bLen);
+		
 		Vector<Float> out = a;
-		for (int i = 0; i < a.getSize()[0]; i++)
-			out.dump()[i] += b.dump()[i];
+		
+		for (int i = 0; i < a.getSize()[0]; i++) {
+			Float oV = out.get(new int[] {i});
+			Float bV = b.get(new int[] {i});
+			
+			oV += bV;
+			out.set(new int[] {i}, oV);
+		}
 		return out;
 	}
 	
@@ -93,10 +107,18 @@ public class Basic {
 	//
 	//
 	
-	public static void printArray(Float[] x) {
-		for (int i = 0; i < x.length; i++) {
-				System.out.print(x[i] + " ");
+	public static void printArray(Vector<Float> x) {
+		
+		for (int i = 0; i < x.getSize()[0]; i++) {
+				System.out.print(x.get(new int[] {i}) + " ");
 		}
 		System.out.println();
+	}
+	
+	public static Float[] fArrayCastFix(Object[] x) {
+		Float[] fArray = new Float[x.length];
+		for (int i = 0; i < x.length; i++)
+			fArray[i] = (Float) x[i];
+		return fArray;
 	}
 }
