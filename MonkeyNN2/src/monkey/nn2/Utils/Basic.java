@@ -98,6 +98,7 @@ public class Basic {
 			Float bV = b.get(new int[] {i});
 			
 			oV += bV;
+			out.set(new int[] {i}, oV);
 		}
 		return out;
 	}

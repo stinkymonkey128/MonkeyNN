@@ -31,7 +31,7 @@ public abstract class Activator {
 		for (int i = 0; i < out.getSize()[0]; i++) {
 			Float outX = out.get(new int[] {i});
 			
-			outX = calc(outX);
+			out.set(new int[] {i}, calc(outX));
 		}
 			
 		return out;

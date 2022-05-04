@@ -80,7 +80,10 @@ public class GradientDescent implements Optimizer {
 	    		cWeight -= learningRate * cLoss * pNeuron;
 	    		
 	    		curr.getWeights().set(new int[] {j, i}, cWeight);
+	    		
+	    		//System.out.print(curr.getWeights().get(new int[] {j, i}) + " ");
 	    	}
+			//System.out.println();
 			
 			// Bias Update
 			
@@ -90,6 +93,7 @@ public class GradientDescent implements Optimizer {
 			
 			curr.getBias().set(new int [] {i}, cBias);
 		}
+		//System.out.println();
 	}
 	
 	@Override

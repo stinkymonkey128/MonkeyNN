@@ -6,7 +6,7 @@ import monkey.nn2.Utils.*;
 
 public class Input implements Layer {
 	
-	Vector<Float> neurons;
+	Shape<Float> neurons;
 	
 	public Input(int neurons) {
 		this.neurons = new Vector<Float>((new Constant(0f)).generate(new int[] {1, neurons})[0]);
