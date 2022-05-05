@@ -47,9 +47,7 @@ public class Test {
 		//model.feed(new Vector<Float>(samp[0]));
 		//model.backProp(new Vector<Float>(goal[0]));
 		
-		Basic.printArray((Vector<Float>)model.feed(new Vector<Float>(samp[0])));
-		
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < samp.length; j++) {
 				model.feed(new Vector<Float>(samp[j]));
 				model.backProp(new Vector<Float>(goal[j]));

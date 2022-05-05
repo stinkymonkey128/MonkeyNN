@@ -80,7 +80,11 @@ public class Adam implements Optimizer {
 
 	@Override
 	public void fitOut(Layer prev, Layer curr, Shape<Float> goal) {
-		// TODO Auto-generated method stub
+		for (int i = 0; i < curr.getNeurons().getSize()[0]; i++) {
+			Float cNeuron = curr.getNeurons().get(new int[] {i});
+			
+			
+		}
 		
 	}
 
