@@ -1,8 +1,13 @@
 package monkey.nn2.Optimizers;
 
+import java.util.List;
+
+import monkey.nn2.Initializer.Constant;
 import monkey.nn2.Layers.Layer;
 import monkey.nn2.LossFunction.LossFunction;
+import monkey.nn2.Utils.Matrix;
 import monkey.nn2.Utils.Shape;
+import monkey.nn2.Utils.Vector;
 
 public class Adam extends Optimizer {
 	private static final long serialVersionUID = 4760081661199424968L;
@@ -45,6 +50,13 @@ public class Adam extends Optimizer {
 	
 	LossFunction lossFunction;
 	
+	List<Layer> layerStack;
+	
+	Shape<Float>[] histVW;
+	Shape<Float>[] histSW;
+	Shape<Float>[] histVB;
+	Shape<Float>[] histSB;
+	
 	/*
 	 * https://arxiv.org/pdf/1412.6980.pdf Adam Constructor
 	 * 
@@ -77,7 +89,7 @@ public class Adam extends Optimizer {
 	/*
 	 * Gradient Back prop hidden layers
 	 */
-	public void fitHid(Layer prev, Layer curr, Layer next) {
+	public void fitHid(Layer prev, Layer curr, Layer next, int index) {
 		for (int i = 0; i < curr.getNeurons().getSize()[0]; i++) {
 			Float cLoss = curr.getLoss().get(new int[] {i});
 			
@@ -93,26 +105,35 @@ public class Adam extends Optimizer {
 			curr.getLoss().set(new int[] {i}, cLoss);
 	    	 
 	    	for (int j = 0; j < prev.getNeurons().getSize()[0]; j++) {
+	    		histVW[index].set(new int[] {j, i}, histVW[index].get(new int[] {j, i}) * beta1 + (1 - beta2) * cLoss);
+				histSW[index].set(new int[] {j, i}, histSW[index].get(new int[] {j, i}) * beta1 + (1 - beta2) * cLoss * cLoss);
+				
 	    		Float cWeight = curr.getWeights().get(new int[] {j, i});
-	    		Float pNeuron = prev.getNeurons().get(new int[] {j});
+	    			
+	    		cWeight -= alpha * histVW[index].get(new int[] {j, i}) / ((float)Math.sqrt(histSW[index].get(new int[] {j, i})) + epsilon);
 	    		
-	    		//cWeight -= learningRate * cLoss * pNeuron;
+	    		curr.getWeights().set(new int[] {j, i}, cWeight );
 	    		
 	    		curr.getWeights().set(new int[] {j, i}, cWeight);
 	    	}
 	    	
-	    	Float cBias = curr.getBias().get(new int[] {i});
-	    	
-	    	//cBias -= cLoss * cBias * learningRate;
-	    	
-	    	curr.getBias().set(new int [] {i}, cBias);
+	    	histVB[index].set(new int[] {i}, histVB[index].get(new int[] {i}) * beta1 + (1 - beta2) * cLoss);
+			histSB[index].set(new int[] {i}, histSB[index].get(new int[] {i}) * beta1 + (1 - beta2) * cLoss * cLoss);
+    						
+			Float cBias = curr.getBias().get(new int[] {i});
+			
+			cBias -= alpha * histVB[index].get(new int[] {i}) / ((float)Math.sqrt(histSB[index].get(new int[] {i})) + epsilon);
+	    		
+			//cBias -= learningRate * cBias * cLoss;
+			
+			curr.getBias().set(new int [] {i}, cBias);
 	    }
 	}
 	
 	/*
 	 * Gradient Back prop Output layer
 	 */
-	public void fitOut(Layer prev, Layer curr, Shape<Float> goal) {
+	public void fitOut(Layer prev, Layer curr, Shape<Float> goal, int index) {
 		for (int i = 0; i < curr.getNeurons().getSize()[0]; i++) {
 			Float cLoss = curr.getLoss().get(new int[] {i});
 			Float cNeuron = curr.getNeurons().get(new int[] {i});
@@ -122,26 +143,68 @@ public class Adam extends Optimizer {
 			curr.getLoss().set(new int[] {i}, cLoss);
 			
 			for (int j = 0; j < prev.getNeurons().getSize()[0]; j++) {
+				histVW[index].set(new int[] {j, i}, histVW[index].get(new int[] {j, i}) * beta1 + (1 - beta2) * cLoss);
+				histSW[index].set(new int[] {j, i}, histSW[index].get(new int[] {j, i}) * beta1 + (1 - beta2) * cLoss * cLoss);
+				
 	    		Float cWeight = curr.getWeights().get(new int[] {j, i});
-	    		Float pNeuron = prev.getNeurons().get(new int[] {j});
 	    			
-	    		//cWeight -= learningRate * cLoss * pNeuron;
+	    		cWeight -= alpha * histVW[index].get(new int[] {j, i}) / ((float)Math.sqrt(histSW[index].get(new int[] {j, i})) + epsilon);
 	    		
-	    		curr.getWeights().set(new int[] {j, i}, cWeight);
+	    		curr.getWeights().set(new int[] {j, i}, cWeight );
 	    		
 	    		//System.out.print(curr.getWeights().get(new int[] {j, i}) + " ");
+	    		
+	    		
+	    		
 	    	}
 			//System.out.println();
 			
 			// Bias Update
 			
+			histVB[index].set(new int[] {i}, histVB[index].get(new int[] {i}) * beta1 + (1 - beta2) * cLoss);
+			histSB[index].set(new int[] {i}, histSB[index].get(new int[] {i}) * beta1 + (1 - beta2) * cLoss * cLoss);
+    						
 			Float cBias = curr.getBias().get(new int[] {i});
+			
+			cBias -= alpha * histVB[index].get(new int[] {i}) / ((float)Math.sqrt(histSB[index].get(new int[] {i})) + epsilon);
 	    		
 			//cBias -= learningRate * cBias * cLoss;
 			
 			curr.getBias().set(new int [] {i}, cBias);
 		}
 		//System.out.println();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void compile(List<Layer> layerStack) {
+		this.layerStack = layerStack;
+		
+		int size = layerStack.size();
+		
+		histVW = (Shape<Float>[])(new Object[size]);
+		histSW = (Shape<Float>[])(new Object[size]);
+		histVB = (Shape<Float>[])(new Object[size]);
+		histSB = (Shape<Float>[])(new Object[size]);
+		
+		for (int i = 0; i < size; i++) {
+			int[] weightSize = layerStack.get(i).getWeights().getSize();
+			int[] biasSize = layerStack.get(i).getBias().getSize();
+			
+			histVW[i] = new Matrix<Float>((new Constant(0f)).generate(weightSize));
+			histSW[i] = new Matrix<Float>((new Constant(0f)).generate(weightSize));
+			histVB[i] = new Vector<Float>((new Constant(0f)).generate(biasSize)[0]);
+			histSB[i] = new Vector<Float>((new Constant(0f)).generate(biasSize)[0]);
+		}
+	}
+
+	@Override
+	public void fit(Shape<Float> goal) {
+		fitOut(layerStack.get(layerStack.size() - 2), layerStack.get(layerStack.size() - 1), goal, layerStack.size() - 1);
+		for (int i = layerStack.size() - 2; i > 0; i--) {
+			fitHid(layerStack.get(i - 1), layerStack.get(i), layerStack.get(i + 1), i);
+		}
+		
 	}
 
 

@@ -65,6 +65,8 @@ public class Sequential extends Structure {
 			
 			currentLayer.compile(new int[] {previousLayer.getNeurons().getSize()[0], currentLayer.getNeurons().getSize()[0]});
 		}
+		
+		this.optimizer.compile(layerStack);
 	}
 
 	@Override
@@ -92,9 +94,6 @@ public class Sequential extends Structure {
 	}
 	
 	public void backProp(Shape<Float> goal) {
-		optimizer.fitOut(layerStack.get(layerStack.size() - 2), layerStack.get(layerStack.size() - 1), goal);
-		for (int i = layerStack.size() - 2; i > 0; i--) {
-			optimizer.fitHid(layerStack.get(i - 1), layerStack.get(i), layerStack.get(i + 1));
-		}
+		optimizer.fit(goal);
 	}
 }

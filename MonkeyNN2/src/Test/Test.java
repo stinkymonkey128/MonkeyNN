@@ -37,25 +37,25 @@ public class Test {
         { 0f, 0f, 1f, 0f, 1f, 0f, 1f, 0f, 0f, /**/ 1f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 1f}
         };
 		
-        Sequential model = null;
 		
+        /*
 		try {
 			ObjectInputStream os = new ObjectInputStream(new FileInputStream(new File("C:\\Users\\gener\\Documents\\NNSaves\\0001.nnst")));
 			model = (Sequential) os.readObject();
 			os.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		
-		Basic.printArray((Vector<Float>)model.feed(new Vector<Float>(samp[0])));
+		//Basic.printArray((Vector<Float>)model.feed(new Vector<Float>(samp[0])));
 		
-        /*
+        
 		Sequential model = new Sequential();
 		model.add(new Dense(18, new Sigmoid(), new RandomUniform(-.5f, .5f), true, new Constant(1f)));
 		model.add(new Dense(324, new Sigmoid(), new RandomUniform(-.5f, .5f), true, new Constant(1f)));
 		model.add(new Dense(162, new Sigmoid(), new RandomUniform(-.5f, .5f), true, new Constant(1f)));
 		model.add(new Dense(2, new Sigmoid(), new RandomUniform(-.5f, .5f), true, new Constant(1f)));
-		model.compile(new GradientDescent(.003f, new MSE()));
+		model.compile(new Adam(.003f, new MSE()));
 		
 		System.out.println(model.summary());
 		
@@ -72,7 +72,7 @@ public class Test {
 		}
 		
 		Basic.printArray((Vector<Float>)model.feed(new Vector<Float>(samp[0])));
-		*/
+		
 	}
 	
 	private static void printMatrix(Float[][] x) {
