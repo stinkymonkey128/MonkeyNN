@@ -9,6 +9,8 @@ import monkey.nn2.Optimizers.*;
 import monkey.nn2.Utils.*;
 
 public class Sequential extends Structure {
+	private static final long serialVersionUID = 1805283830996024792L;
+
 	ArrayList<Layer> layerStack;
 	
 	LossFunction lossFunction;

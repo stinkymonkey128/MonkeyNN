@@ -4,7 +4,8 @@ import monkey.nn2.Activators.Activator;
 import monkey.nn2.Initializer.Constant;
 import monkey.nn2.Utils.*;
 
-public class Input implements Layer {
+public class Input extends Layer {
+	private static final long serialVersionUID = 6829986169754535686L;
 	
 	Shape<Float> neurons;
 	

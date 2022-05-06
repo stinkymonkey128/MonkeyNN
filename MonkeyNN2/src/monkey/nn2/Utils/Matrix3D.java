@@ -1,6 +1,7 @@
 package monkey.nn2.Utils;
 
-public class Matrix3D<T> implements Shape<T> {
+public class Matrix3D<T> extends Shape<T> {
+	private static final long serialVersionUID = -7538345762182090966L;
 	
 	T[][][] matrix;
 	

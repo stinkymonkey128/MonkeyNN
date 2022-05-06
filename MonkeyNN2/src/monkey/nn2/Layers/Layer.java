@@ -1,10 +1,14 @@
 package monkey.nn2.Layers;
 
+import java.io.Serializable;
+
 import monkey.nn2.Activators.Activator;
 import monkey.nn2.Utils.Shape;
 import monkey.nn2.Utils.Vector;
 
-public interface Layer {
+public abstract class Layer implements Serializable{
+	private static final long serialVersionUID = -2390834854910462178L;
+	
 	public abstract boolean hasWeights();
 	public abstract Shape<Float> feed(Shape<Float> input);
 	public abstract void compile(int[] weightShape);

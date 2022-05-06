@@ -1,9 +1,12 @@
 package monkey.nn2.Utils;
 
+import java.io.Serializable;
+
 import monkey.nn2.Exceptions.IllegalLength;
 
-public class Basic {
-	
+public class Basic implements Serializable {
+	private static final long serialVersionUID = 4592711807187177616L;
+
 	/*
 	 * Rotate vector
 	 * 

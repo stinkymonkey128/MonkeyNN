@@ -1,5 +1,7 @@
 package Test;
 
+import java.io.*;
+
 import monkey.nn2.Activators.*;
 import monkey.nn2.Structure.*;
 import monkey.nn2.Utils.*;
@@ -35,6 +37,19 @@ public class Test {
         { 0f, 0f, 1f, 0f, 1f, 0f, 1f, 0f, 0f, /**/ 1f, 0f, 0f, 0f, 0f, 0f, 0f, 0f, 1f}
         };
 		
+        Sequential model = null;
+		
+		try {
+			ObjectInputStream os = new ObjectInputStream(new FileInputStream(new File("C:\\Users\\gener\\Documents\\NNSaves\\0001.nnst")));
+			model = (Sequential) os.readObject();
+			os.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Basic.printArray((Vector<Float>)model.feed(new Vector<Float>(samp[0])));
+		
+        /*
 		Sequential model = new Sequential();
 		model.add(new Dense(18, new Sigmoid(), new RandomUniform(-.5f, .5f), true, new Constant(1f)));
 		model.add(new Dense(324, new Sigmoid(), new RandomUniform(-.5f, .5f), true, new Constant(1f)));
@@ -47,7 +62,9 @@ public class Test {
 		//model.feed(new Vector<Float>(samp[0]));
 		//model.backProp(new Vector<Float>(goal[0]));
 		
-		for (int i = 0; i < 10; i++) {
+		Basic.printArray((Vector<Float>)model.feed(new Vector<Float>(samp[0])));
+		
+		for (int i = 0; i < 1; i++) {
 			for (int j = 0; j < samp.length; j++) {
 				model.feed(new Vector<Float>(samp[j]));
 				model.backProp(new Vector<Float>(goal[j]));
@@ -55,6 +72,7 @@ public class Test {
 		}
 		
 		Basic.printArray((Vector<Float>)model.feed(new Vector<Float>(samp[0])));
+		*/
 	}
 	
 	private static void printMatrix(Float[][] x) {

@@ -4,8 +4,9 @@ import monkey.nn2.Activators.Activator;
 import monkey.nn2.Initializer.Constant;
 import monkey.nn2.Utils.*;
 
-public class ActivatorL implements Layer {
-	
+public class ActivatorL extends Layer {
+	private static final long serialVersionUID = -2109267474806616052L;
+
 	Vector<Float> neurons;
 	
 	Activator activator;

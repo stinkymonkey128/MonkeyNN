@@ -1,6 +1,7 @@
 package monkey.nn2.Utils;
 
-public class Vector<T> implements Shape<T> {
+public class Vector<T> extends Shape<T> {
+	private static final long serialVersionUID = -5230525396714452759L;
 	
 	private T[] vector;
 	

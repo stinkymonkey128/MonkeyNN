@@ -3,7 +3,8 @@ package monkey.nn2.Layers;
 import monkey.nn2.Activators.Activator;
 import monkey.nn2.Utils.Shape;
 
-public class Flatten implements Layer {
+public class Flatten extends Layer {
+	private static final long serialVersionUID = -1414865157647278396L;
 
 	@Override
 	public boolean hasWeights() {

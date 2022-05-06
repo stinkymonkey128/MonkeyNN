@@ -3,7 +3,9 @@ package monkey.nn2.Layers;
 import monkey.nn2.Activators.Activator;
 import monkey.nn2.Utils.*;
 
-public class Conv2D implements Layer {
+public class Conv2D extends Layer {
+	private static final long serialVersionUID = -866424006190212993L;
+	
 	float[][][] filters;
 	float[] bias;
 	Activator activator;

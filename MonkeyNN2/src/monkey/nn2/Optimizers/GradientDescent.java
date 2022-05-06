@@ -6,7 +6,9 @@ import monkey.nn2.LossFunction.*;
 import monkey.nn2.Structure.Structure;
 import monkey.nn2.Utils.*;
 
-public class GradientDescent implements Optimizer {
+public class GradientDescent extends Optimizer {
+	private static final long serialVersionUID = -710255263282990240L;
+	
 	/*
 	 * Loss Function everything connected to it combined and compared to expected
 	 * a = learning rate
@@ -66,10 +68,10 @@ public class GradientDescent implements Optimizer {
 	 */
 	public void fitOut(Layer prev, Layer curr, Shape<Float> goal) {
 		for (int i = 0; i < curr.getNeurons().getSize()[0]; i++) {
+			Float cLoss = curr.getLoss().get(new int[] {i});
 			Float cNeuron = curr.getNeurons().get(new int[] {i});
 			
-			// TODO fix loss function prime or calc
-			Float cLoss = lossFunction.prime(cNeuron, goal.get(new int[] {i})) * curr.getActivator().prime(cNeuron);
+			cLoss = lossFunction.prime(cNeuron, goal.get(new int[] {i})) * curr.getActivator().prime(cNeuron);
 	    	
 			curr.getLoss().set(new int[] {i}, cLoss);
 			

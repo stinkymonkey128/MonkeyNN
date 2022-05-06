@@ -2,7 +2,9 @@ package monkey.nn2.LossFunction;
 
 import monkey.nn2.Exceptions.IllegalLength;
 
-public class MSE implements LossFunction {
+public class MSE extends LossFunction {
+	private static final long serialVersionUID = 4596033278273889594L;
+
 	/* 
 	 * Mean Squared Error
 	 * 

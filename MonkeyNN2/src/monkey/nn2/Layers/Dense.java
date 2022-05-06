@@ -4,7 +4,9 @@ import monkey.nn2.Activators.*;
 import monkey.nn2.Initializer.*;
 import monkey.nn2.Utils.*;
 
-public class Dense implements Layer {
+public class Dense extends Layer {
+	private static final long serialVersionUID = 1L;
+
 	Initializer weightInit;
 	
 	Vector<Float> neurons;
