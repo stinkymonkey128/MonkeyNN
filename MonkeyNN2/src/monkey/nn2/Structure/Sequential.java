@@ -56,14 +56,14 @@ public class Sequential extends Structure {
 		
 		// ADD PASSTHROUGH LAYER (INPUT)
 		if (!layerStack.get(0).getName().equals("Input"))
-			layerStack.add(0, new Input(layerStack.get(0).getNeurons().getSize()[0]));
+			layerStack.add(0, new Input(layerStack.get(0).getNeurons().getSize()));
 		
 		// INIT WEIGHTS + BIAS (if applicable)
 		for (int i = 1; i < layerStack.size(); i++) {
 			Layer currentLayer = layerStack.get(i);
 			Layer previousLayer = layerStack.get(i - 1);
 			
-			currentLayer.compile(new int[] {previousLayer.getNeurons().getSize()[0], currentLayer.getNeurons().getSize()[0]});
+			currentLayer.compile(previousLayer.getNeurons().getSize(), currentLayer.getNeurons().getSize());
 		}
 		
 		this.optimizer.compile(layerStack);

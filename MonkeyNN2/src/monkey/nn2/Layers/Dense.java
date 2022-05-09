@@ -59,8 +59,8 @@ public class Dense extends Layer {
 		return neurons;
 	}
 	
-	public void compile(int[] weightShape) {
-		weights = new Matrix<Float>(weightInit.generate(weightShape));
+	public void compile(int[] previousSize, int[] currentSize) {
+		weights = new Matrix<Float>(weightInit.generate(new int[] {previousSize[0], currentSize[0]}));
 	}
 
 	@Override

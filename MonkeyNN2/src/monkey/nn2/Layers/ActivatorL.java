@@ -23,12 +23,6 @@ public class ActivatorL extends Layer {
 	}
 
 	@Override
-	public void compile(int[] weightShape) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public Vector<Float> getNeurons() {
 		return neurons;
 	}
@@ -71,5 +65,12 @@ public class ActivatorL extends Layer {
 	public Shape<Float> feed(Shape<Float> input) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public void compile(int[] previousSize, int[] currentSize) {
+		// TODO Auto-generated method stub
+		
 	}
 }

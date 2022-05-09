@@ -9,8 +9,15 @@ public class Input extends Layer {
 	
 	Shape<Float> neurons;
 	
-	public Input(int neurons) {
-		this.neurons = new Vector<Float>((new Constant(0f)).generate(new int[] {1, neurons})[0]);
+	public Input(int[] size) {
+		int len = size.length;
+		
+		if (len == 1)
+			neurons = new Vector<Float>(size);
+		if (len == 2)
+			neurons = new Matrix<Float>(size);
+		if (len == 3)
+			neurons = new Matrix3D<Float>(size);
 	}
 
 
@@ -20,7 +27,7 @@ public class Input extends Layer {
 	}
 
 	@Override
-	public void compile(int[] weightShape) {
+	public void compile(int[] previousSize, int[] currentSize) {
 		// NO WEIGHTS
 	}
 

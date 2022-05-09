@@ -11,7 +11,7 @@ public abstract class Layer implements Serializable{
 	
 	public abstract boolean hasWeights();
 	public abstract Shape<Float> feed(Shape<Float> input);
-	public abstract void compile(int[] weightShape);
+	public abstract void compile(int[] previousSize, int[] currentSize);
 	
 	public abstract Shape<Float> getNeurons();
 	public abstract int[] weightSize();
