@@ -28,7 +28,7 @@ public class Flatten extends Layer {
 				for (int c = 0; c < iSize[2]; c++)
 					neuron.set(new int[] {a * b + c}, neuron.get(new int[] {a, b, c}));
 		
-		return new Vector<Float>(neuron);
+		return neuron;
 	}
 
 	@Override
