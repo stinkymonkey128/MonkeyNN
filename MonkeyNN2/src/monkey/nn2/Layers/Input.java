@@ -4,12 +4,20 @@ import monkey.nn2.Activators.Activator;
 import monkey.nn2.Initializer.Constant;
 import monkey.nn2.Utils.*;
 
-public class Input implements Layer {
+public class Input extends Layer {
+	private static final long serialVersionUID = 6829986169754535686L;
 	
 	Shape<Float> neurons;
 	
-	public Input(int neurons) {
-		this.neurons = new Vector<Float>((new Constant(0f)).generate(new int[] {1, neurons})[0]);
+	public Input(int[] size) {
+		int len = size.length;
+		
+		if (len == 1)
+			neurons = new Vector<Float>(size);
+		if (len == 2)
+			neurons = new Matrix<Float>(size);
+		if (len == 3)
+			neurons = new Matrix3D<Float>(size);
 	}
 
 
@@ -19,7 +27,7 @@ public class Input implements Layer {
 	}
 
 	@Override
-	public void compile(int[] weightShape) {
+	public void compile(int[] previousSize, int[] currentSize) {
 		// NO WEIGHTS
 	}
 

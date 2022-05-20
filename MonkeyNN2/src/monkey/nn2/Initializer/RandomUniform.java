@@ -2,7 +2,9 @@ package monkey.nn2.Initializer;
 
 import java.util.*;
 
-public class RandomUniform implements Initializer{
+public class RandomUniform extends Initializer {
+	private static final long serialVersionUID = -6975253487309733938L;
+	
 	Random random;
 	Float min, max;
 	

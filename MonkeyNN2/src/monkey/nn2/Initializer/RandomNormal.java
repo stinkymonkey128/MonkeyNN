@@ -5,7 +5,9 @@ import java.util.*;
 /*
  * Gaussian Distribution
  */
-public class RandomNormal implements Initializer{
+public class RandomNormal extends Initializer {
+	private static final long serialVersionUID = -259849044740722186L;
+
 	Random random;
 	
 	float mean;

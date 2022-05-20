@@ -9,6 +9,8 @@ import monkey.nn2.Optimizers.*;
 import monkey.nn2.Utils.*;
 
 public class Sequential extends Structure {
+	private static final long serialVersionUID = 1805283830996024792L;
+
 	ArrayList<Layer> layerStack;
 	
 	LossFunction lossFunction;
@@ -54,15 +56,17 @@ public class Sequential extends Structure {
 		
 		// ADD PASSTHROUGH LAYER (INPUT)
 		if (!layerStack.get(0).getName().equals("Input"))
-			layerStack.add(0, new Input(layerStack.get(0).getNeurons().getSize()[0]));
+			layerStack.add(0, new Input(layerStack.get(0).getNeurons().getSize()));
 		
 		// INIT WEIGHTS + BIAS (if applicable)
 		for (int i = 1; i < layerStack.size(); i++) {
 			Layer currentLayer = layerStack.get(i);
 			Layer previousLayer = layerStack.get(i - 1);
 			
-			currentLayer.compile(new int[] {previousLayer.getNeurons().getSize()[0], currentLayer.getNeurons().getSize()[0]});
+			currentLayer.compile(previousLayer.getNeurons().getSize(), currentLayer.getNeurons().getSize());
 		}
+		
+		this.optimizer.compile(layerStack);
 	}
 
 	@Override
@@ -90,9 +94,6 @@ public class Sequential extends Structure {
 	}
 	
 	public void backProp(Shape<Float> goal) {
-		optimizer.fitOut(layerStack.get(layerStack.size() - 2), layerStack.get(layerStack.size() - 1), goal);
-		for (int i = layerStack.size() - 2; i > 0; i--) {
-			optimizer.fitHid(layerStack.get(i - 1), layerStack.get(i), layerStack.get(i + 1));
-		}
+		optimizer.fit(goal);
 	}
 }

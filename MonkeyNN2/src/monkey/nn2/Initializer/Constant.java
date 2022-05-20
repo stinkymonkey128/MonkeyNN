@@ -1,6 +1,8 @@
 package monkey.nn2.Initializer;
 
-public class Constant implements Initializer {
+public class Constant extends Initializer {
+	private static final long serialVersionUID = 7841213305664943446L;
+	
 	Float constant;
 	
 	/*

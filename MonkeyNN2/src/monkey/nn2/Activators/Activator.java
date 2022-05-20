@@ -1,8 +1,13 @@
 package monkey.nn2.Activators;
 
+import java.io.Serializable;
+
 import monkey.nn2.Utils.*;
 
-public abstract class Activator {
+public abstract class Activator implements Serializable {
+
+	private static final long serialVersionUID = 6557319658114749766L;
+
 	public abstract Float calc(Float x);
 	
 	/*

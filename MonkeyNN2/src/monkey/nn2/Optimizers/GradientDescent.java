@@ -1,12 +1,14 @@
 package monkey.nn2.Optimizers;
 
-import monkey.nn2.Exceptions.IllegalLength;
+import java.util.List;
+
 import monkey.nn2.Layers.Layer;
 import monkey.nn2.LossFunction.*;
-import monkey.nn2.Structure.Structure;
 import monkey.nn2.Utils.*;
 
-public class GradientDescent implements Optimizer {
+public class GradientDescent extends Optimizer {
+	private static final long serialVersionUID = -710255263282990240L;
+	
 	/*
 	 * Loss Function everything connected to it combined and compared to expected
 	 * a = learning rate
@@ -20,6 +22,7 @@ public class GradientDescent implements Optimizer {
 	
 	Float learningRate;
 	LossFunction lossFunction;
+	List<Layer> layerStack;
 	
 	public GradientDescent(Float learningRate, LossFunction lossFunction) {
 		this.learningRate = learningRate;
@@ -97,7 +100,21 @@ public class GradientDescent implements Optimizer {
 	}
 	
 	@Override
+	public void fit(Shape<Float> goal) {
+		fitOut(layerStack.get(layerStack.size() - 2), layerStack.get(layerStack.size() - 1), goal);
+		for (int i = layerStack.size() - 2; i > 0; i--) {
+			fitHid(layerStack.get(i - 1), layerStack.get(i), layerStack.get(i + 1));
+		}
+	}
+	
+	@Override
 	public String getName() {
 		return "GradientDescent";
 	}
+
+	@Override
+	public void compile(List<Layer> layerStack) {
+		this.layerStack = layerStack;
+	}
+
 }

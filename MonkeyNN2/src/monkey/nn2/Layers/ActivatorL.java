@@ -4,8 +4,9 @@ import monkey.nn2.Activators.Activator;
 import monkey.nn2.Initializer.Constant;
 import monkey.nn2.Utils.*;
 
-public class ActivatorL implements Layer {
-	
+public class ActivatorL extends Layer {
+	private static final long serialVersionUID = -2109267474806616052L;
+
 	Vector<Float> neurons;
 	
 	Activator activator;
@@ -19,12 +20,6 @@ public class ActivatorL implements Layer {
 	@Override
 	public boolean hasWeights() {
 		return false;
-	}
-
-	@Override
-	public void compile(int[] weightShape) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -70,5 +65,12 @@ public class ActivatorL implements Layer {
 	public Shape<Float> feed(Shape<Float> input) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public void compile(int[] previousSize, int[] currentSize) {
+		// TODO Auto-generated method stub
+		
 	}
 }
