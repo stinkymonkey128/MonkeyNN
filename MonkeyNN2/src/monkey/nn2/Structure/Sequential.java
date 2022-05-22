@@ -71,11 +71,11 @@ public class Sequential extends Structure {
 
 	@Override
 	public String summary() {
-		String out = "Model: Sequential\nLoss Function: " + /*lossFunction.getName() +*/ "\nOptimizer: " + optimizer.getName() + "\n----------------------------\n";
-		out += String.format(" %-8s", "Layer") + String.format("%-8s", "Size") + String.format("%-10s", "Weight Size") + "\n----------------------------\n";
+		String out = "Model: Sequential\nLoss Function: " + /*lossFunction.getName() +*/ "\nOptimizer: " + optimizer.getName() + "\n-------------------------------\n";
+		out += String.format(" %-8s", "Layer") + String.format("%-12s", "Size") + String.format("%-10s", "Weight Size") + "\n-------------------------------\n";
 		
 		for (Layer layer : layerStack) {
-			out += String.format(" %-8s", layer.getName()) + String.format("%-8d", layer.getNeurons().getSize()[0]) + String.format("%-10s", Basic.iAtoS(layer.weightSize())) + "\n";
+			out += String.format(" %-8s", layer.getName()) + String.format("%-12s", Basic.iAtoS(layer.getNeurons().getSize())) + String.format("%-10s", Basic.iAtoS(layer.weightSize())) + "\n";
 		}
 		
 		return out;

@@ -76,8 +76,8 @@ public class Basic implements Serializable {
 			return "None";
 		String out = "{";
 		for (int i = 0; i < x.length - 1; i++)
-			out += x[i] + ",";
-		return out + " " + x[x.length - 1] + "}";
+			out += x[i] + ", ";
+		return out + x[x.length - 1] + "}";
 	}
 	
 	
@@ -110,10 +110,10 @@ public class Basic implements Serializable {
 	//
 	//
 	
-	public static void printArray(Vector<Float> x) {
+	public static void printArray(Float[] x) {
 		
-		for (int i = 0; i < x.getSize()[0]; i++) {
-				System.out.print(x.get(new int[] {i}) + " ");
+		for (int i = 0; i < x.length; i++) {
+				System.out.print(x[i] + " ");
 		}
 		System.out.println();
 	}

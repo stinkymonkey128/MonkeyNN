@@ -6,11 +6,11 @@ import monkey.nn2.Utils.*;
 public class Flatten extends Layer {
 	private static final long serialVersionUID = -1414865157647278396L;
 	
-	private Vector<Float> neuron;
+	private Vector<Float> neurons;
 	
 	public Flatten() {
 		// Temporary initialization to avoid null pointer
-		neuron = new Vector<Float>(new int[] {1});
+		neurons = new Vector<Float>(new int[] {1});
 	}
 
 	@Override
@@ -21,25 +21,29 @@ public class Flatten extends Layer {
 
 	@Override
 	public Shape<Float> feed(Shape<Float> input) {
+		int index = 0;
+		
 		int[] iSize = input.getSize();
+		System.out.println(iSize[0] + " " + iSize[1] + " " + iSize[2]);
 		
 		for (int a = 0; a < iSize[0]; a++)
 			for (int b = 0; b < iSize[1]; b++)
-				for (int c = 0; c < iSize[2]; c++)
-					neuron.set(new int[] {a * b + c}, neuron.get(new int[] {a, b, c}));
+				for (int c = 0; c < iSize[2]; c++) {
+					neurons.set(new int[] {index}, input.get(new int[] {a, b, c}));
+					index++;
+				}
 		
-		return neuron;
+		return neurons;
 	}
 
 	@Override
 	public void compile(int[] previousSize, int[] currentSize) {
-		neuron = new Vector<Float>(new int[] {previousSize[0] * previousSize[1] * previousSize[2]});
+		neurons = new Vector<Float>(new int[] {previousSize[0] * previousSize[1] * previousSize[2]});
 	}
 
 	@Override
 	public Shape<Float> getNeurons() {
-		// TODO Auto-generated method stub
-		return null;
+		return neurons;
 	}
 
 	@Override
@@ -50,8 +54,7 @@ public class Flatten extends Layer {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Flatten";
 	}
 
 	@Override
