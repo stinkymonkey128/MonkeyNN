@@ -5,7 +5,7 @@ import java.io.Serializable;
 import monkey.nn2.Utils.*;
 
 public abstract class Activator implements Serializable {
-
+	
 	private static final long serialVersionUID = 6557319658114749766L;
 
 	public abstract Float calc(Float x);
@@ -17,6 +17,11 @@ public abstract class Activator implements Serializable {
 	 */
 	public abstract Float prime(Float x);
 	
+	/*
+	 * Applying activator function to a layer
+	 *
+	 * @param input layers Matrix
+	 */
 	public Matrix<Float> calc(Matrix<Float> x) {
 		int xRow = x.getSize()[0];
 		int xCol = x.getSize()[1];
@@ -30,6 +35,11 @@ public abstract class Activator implements Serializable {
 		return out;
 	}
 	
+	/*
+	 * Applying activator function to a layer
+	 *
+	 * @param input layers Vector
+	 */
 	public Vector<Float> calc(Vector<Float> x) {
 		Vector<Float> out = x;
 		
