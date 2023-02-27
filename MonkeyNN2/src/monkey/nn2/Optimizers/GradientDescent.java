@@ -33,6 +33,8 @@ public class GradientDescent extends Optimizer {
 	 * Gradient Back prop hidden layers
 	 */
 	public void fitHid(Layer prev, Layer curr, Layer next) {
+		
+		// Calculating losses from previous epoch of weights and biases
 		for (int i = 0; i < curr.getNeurons().getSize()[0]; i++) {
 			Float cLoss = curr.getLoss().get(new int[] {i});
 			
@@ -43,10 +45,12 @@ public class GradientDescent extends Optimizer {
 				cLoss += nLoss * nWeight;
 			}
 			
+			// Applying activator function to the loss *regression by applying the derivative
 			cLoss *= curr.getActivator().prime(curr.getNeurons().get(new int[] {i}));
 			
 			curr.getLoss().set(new int[] {i}, cLoss);
-	    	 
+	    	
+		// Updating weights and biases
 	    	for (int j = 0; j < prev.getNeurons().getSize()[0]; j++) {
 	    		Float cWeight = curr.getWeights().get(new int[] {j, i});
 	    		Float pNeuron = prev.getNeurons().get(new int[] {j});
@@ -68,10 +72,13 @@ public class GradientDescent extends Optimizer {
 	 * Gradient Back prop Output layer
 	 */
 	public void fitOut(Layer prev, Layer curr, Shape<Float> goal) {
+		
+		// Getting compiled loss of the output layers
 		for (int i = 0; i < curr.getNeurons().getSize()[0]; i++) {
 			Float cLoss = curr.getLoss().get(new int[] {i});
 			Float cNeuron = curr.getNeurons().get(new int[] {i});
 			
+			// Applying reverse loss function (derivative)
 			cLoss = lossFunction.prime(cNeuron, goal.get(new int[] {i})) * curr.getActivator().prime(cNeuron);
 	    	
 			curr.getLoss().set(new int[] {i}, cLoss);
@@ -79,7 +86,8 @@ public class GradientDescent extends Optimizer {
 			for (int j = 0; j < prev.getNeurons().getSize()[0]; j++) {
 	    		Float cWeight = curr.getWeights().get(new int[] {j, i});
 	    		Float pNeuron = prev.getNeurons().get(new int[] {j});
-	    			
+	    		
+			// Updating weights
 	    		cWeight -= learningRate * cLoss * pNeuron;
 	    		
 	    		curr.getWeights().set(new int[] {j, i}, cWeight);
