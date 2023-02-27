@@ -1,5 +1,6 @@
 package monkey.nn2.Activators;
 
+// Modified Sigmoid activator covers negative and positive range
 public class MSigmoid extends Activator{
 
 	@Override
