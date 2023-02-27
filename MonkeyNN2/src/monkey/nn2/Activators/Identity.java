@@ -1,5 +1,6 @@
 package monkey.nn2.Activators;
 
+// Identity activator passes through without any modifications
 public class Identity extends Activator {
 	
 	@Override
