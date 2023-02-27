@@ -1,5 +1,6 @@
 package monkey.nn2.Activators;
 
+// LeakyRelu activation no upper bounds
 public class LeakyRelu extends Activator {
 
 	@Override
